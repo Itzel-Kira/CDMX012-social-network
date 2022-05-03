@@ -1,5 +1,22 @@
-// Este es el punto de entrada de tu aplicacion
+import {home} from './components/home.js';
+const rootDiv = document.getElementById('root');
+rootDiv.innerHTML = routes[window.location.pathname];
 
-import { myFunction } from './lib/index.js';
+const routes = {
+    '/' : home,
+   // '/contact' : contact,
+   // '/about' : about
+};
 
-myFunction();
+const onNavigate = (pathname) => {
+    window.history.pushState(
+    {},
+    pathname,
+    window.location.origin + pathname
+    )
+    rootDiv.appendChild(routes[pathname]());
+};
+
+window.onpopstate = () => {
+    rootDiv.appendChild(routes[window.location.pathname]());
+}
