@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 // Esto es una función que retorna homeDiv que es un nuevo nodo
+import { loginGoogle } from '../lib/auth.js';
 import { onNavigate } from '../main.js';
 
 export const homeLogin = () => {
@@ -27,6 +28,7 @@ export const homeLogin = () => {
   buttonRegisterLogin.className = 'buttomLogin';
   buttonRegisterLogin.textContent = 'Adelante';
   buttonRegisterLogin.addEventListener('click', () => {
+    loginGoogle();
     onNavigate('/post');
   });
 

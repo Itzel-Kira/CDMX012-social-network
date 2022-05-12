@@ -1,4 +1,4 @@
-/*import { exit } from "../lib/auth.js";*/
+import { exit } from "../lib/auth.js";
 import { onNavigate } from "../main.js";
 
 export const post =()=>{
