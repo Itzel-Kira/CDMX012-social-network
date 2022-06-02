@@ -1,4 +1,4 @@
-/* eslint-disable import/no-cycle */
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js';
 import { homeLogin } from './components/home.js';
 import { post } from './components/post.js';
 
@@ -6,7 +6,7 @@ const rootDiv = document.getElementById('root');
 
 const routes = {
   '/': homeLogin,
-  '/post': post
+  '/post': post,
 };
 
 export const onNavigate = (pathname) => {
@@ -18,13 +18,21 @@ export const onNavigate = (pathname) => {
   while (rootDiv.firstChild) {
     rootDiv.removeChild(rootDiv.firstChild);
   }
-  rootDiv.appendChild(routes[pathname]());
+  rootDiv.append(routes[pathname]());
 };
 
 window.onpopstate = () => {
-  rootDiv.appendChild(routes[window.location.pathname]());
+  rootDiv.append(routes[window.location.pathname]());
 };
 
 const component = routes[window.location.pathname];
 
-rootDiv.appendChild(component());
+onAuthStateChanged(getAuth(), (user) => {
+  if (user) {
+    onNavigate('/post');
+  } else {
+    onNavigate('/');
+  }
+});
+
+rootDiv.append(component());
